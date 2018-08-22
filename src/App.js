@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import EPICAPI from './EPICAPI';
 import moment from 'moment';
-import DatePicker from 'react-date-picker';
+import Calendar from 'react-calendar';
 import './DatePickerStyle.css';
 import ExpandableImage from './ExpandableImage';
 import './App.css';
@@ -68,21 +68,22 @@ class App extends Component {
     const minDate = this.state.minMoment && this.state.minMoment.toDate();
     const maxDate = this.state.maxMoment && this.state.maxMoment.toDate();
 
-    let selectedDate = undefined;
+    let selectedDate;
     if (this.state.selectedMoment && this.state.selectedMoment.isValid())
       selectedDate = this.state.selectedMoment.toDate();
 
     return (
       <div className="app">
-        <DatePicker
-          className="date-picker-style"
-          minDetail="decade"
-          minDate={minDate}
-          maxDate={maxDate}
-          value={selectedDate}
-          onChange={this.onDateChange}
-        />
-        <div className="image-container">{images}</div>
+        <div className="calendar-container">
+          <Calendar
+            minDetail="decade"
+            minDate={minDate}
+            maxDate={maxDate}
+            value={selectedDate}
+            onChange={this.onDateChange}
+          />
+        </div>
+        <div className="images-container">{images}</div>
       </div>
     );
   }
