@@ -1,0 +1,13 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.image-container {
+    display: flex;
+    background-color: transparent;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    align-items: center;
+}

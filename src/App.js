@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import EPICAPI from './EPICAPI';
 import moment from 'moment';
 import DatePicker from 'react-date-picker';
+import './DatePickerStyle.css';
+import ExpandableImage from './ExpandableImage';
 import './App.css';
 
 class App extends Component {
@@ -34,13 +36,13 @@ class App extends Component {
     const selectedMoment = moment(date);
     this.setState({ selectedMoment: selectedMoment });
     EPICAPI.fetchImageDataByDateString(selectedMoment.format('YYYY-MM-DD'))
-      .then(this.translateImageData)
+      .then(this.translateAPIImageData)
       .then(imageData => {
         this.setState({ imageData: imageData });
       });
   }
 
-  translateImageData(imageData) {
+  translateAPIImageData(imageData) {
     return imageData.map(d => {
       const id = d.identifier;
       const imageName = d.image;
@@ -59,17 +61,28 @@ class App extends Component {
   }
 
   render() {
+    const images = imageData.map(d => (
+      <ExpandableImage key={d.id} imageData={d} />
+    ));
+
+    const minDate = this.state.minMoment && this.state.minMoment.toDate();
+    const maxDate = this.state.maxMoment && this.state.maxMoment.toDate();
+
+    let selectedDate = undefined;
+    if (this.state.selectedMoment && this.state.selectedMoment.isValid())
+      selectedDate = this.state.selectedMoment.toDate();
+
     return (
       <div className="app">
         <DatePicker
+          className="date-picker-style"
           minDetail="decade"
-          minDate={this.state.minMoment && this.state.minMoment.toDate()}
-          maxDate={this.state.maxMoment && this.state.maxMoment.toDate()}
-          value={
-            this.state.selectedMoment && this.state.selectedMoment.toDate()
-          }
+          minDate={minDate}
+          maxDate={maxDate}
+          value={selectedDate}
           onChange={this.onDateChange}
         />
+        <div className="image-container">{images}</div>
       </div>
     );
   }
