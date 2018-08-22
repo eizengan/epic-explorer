@@ -26,18 +26,27 @@ class ExpandableImage extends Component {
     lat = `${Math.abs(lat.toFixed(3))}°${lat > 0 ? 'N' : 'S'}`;
     let lon = this.props.imageData.center.lon;
     lon = `${Math.abs(lon.toFixed(3))}°${lon > 0 ? 'W' : 'E'}`;
-    const date = this.props.imageData.date.format('M-D-YYYY, h:mm a')
+    const date = this.props.imageData.date.format('M-D-YYYY, h:mm a');
 
     return (
       <div className={classes.join(' ')} onClick={onClick}>
-        <div className="close-button" onClick={this.shrink}>
-          <div className="close-button-icon" />
-        </div>
-        <img src={this.props.imageData.imageURL} alt={this.props.imageData.imageName} />
-        <div className='overlay'>
-          <div>{lat}, {lon}</div>
-          <div>{date}</div>
-        </div>
+        {this.state.expanded && (
+          <div className="close-button" onClick={this.shrink}>
+            <div className="close-button-icon" />
+          </div>
+        )}
+        <img
+          src={this.props.imageData.imageURL}
+          alt={this.props.imageData.imageName}
+        />
+        {this.state.expanded && (
+          <div className="overlay">
+            <div>
+              {lat}, {lon}
+            </div>
+            <div>{date}</div>
+          </div>
+        )}
       </div>
     );
   }
