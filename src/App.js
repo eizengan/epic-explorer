@@ -62,7 +62,9 @@ class App extends Component {
 
   render() {
     const images = imageData.map(d => (
-      <ExpandableImage key={d.id} imageData={d} />
+      <div key={d.id} className="image">
+        <ExpandableImage imageData={d} />
+      </div>
     ));
 
     const minDate = this.state.minMoment && this.state.minMoment.toDate();
