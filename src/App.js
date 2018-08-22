@@ -20,6 +20,8 @@ class App extends Component {
 
   componentDidMount() {
     EPICAPI.fetchImageDateStrings().then(dates => {
+      if (!dates || !dates.length) return;
+
       const sortedDates = dates.map(d => d.date).sort();
       const minMoment = moment(sortedDates[0]);
       const maxMoment = moment(sortedDates[sortedDates.length - 1]);
@@ -35,29 +37,9 @@ class App extends Component {
   onDateChange(date) {
     const selectedMoment = moment(date);
     this.setState({ selectedMoment: selectedMoment });
-    EPICAPI.fetchImageDataByDateString(selectedMoment.format('YYYY-MM-DD'))
-      .then(this.translateAPIImageData)
-      .then(imageData => {
-        this.setState({ imageData: imageData });
-      });
-  }
-
-  translateAPIImageData(imageData) {
-    return imageData.map(d => {
-      const id = d.identifier;
-      const imageName = d.image;
-      const imageURL = EPICAPI.createImageURL(d.image);
-      const center = d.centroid_coordinates;
-      const date = moment(d.date);
-
-      return {
-        id: id,
-        imageName: imageName,
-        imageURL: imageURL,
-        center: center,
-        date: date
-      };
-    });
+    EPICAPI.fetchImageDataByDateString(
+      selectedMoment.format('YYYY-MM-DD')
+    ).then(imageData => this.setState({ imageData: imageData }));
   }
 
   render() {

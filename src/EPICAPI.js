@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 const EPICAPI = {
   apiEndpoint: 'https://api.nasa.gov/EPIC/api/enhanced',
   archiveEndpoint: 'https://api.nasa.gov/EPIC/archive/enhanced',
@@ -5,18 +7,52 @@ const EPICAPI = {
 
   fetchImageDateStrings: function() {
     const url = `${this.apiEndpoint}/all?api_key=${this.apiKey}`;
-    return fetch(url).then(res => res.json());
+    return global
+      .fetch(url)
+      .then(res => res.json())
+      .catch(err => {
+        console.log(err);
+        return [];
+      });
   },
   fetchImageDataByDateString: function(dateString) {
     const url = `${this.apiEndpoint}/date/${dateString}?api_key=${this.apiKey}`;
-    return fetch(url).then(res => res.json());
+    return global
+      .fetch(url)
+      .then(res => res.json())
+      .catch(err => {
+        console.log(err);
+        return [];
+      })
+      .then(this.mapAPIImageData);
   },
+  mapAPIImageData(imageData) {
+    return imageData.map(d => {
+      const id = d.identifier;
+      const imageName = d.image;
+      const imageURL = EPICAPI.createImageURL(d.image);
+      const center = d.centroid_coordinates;
+      const date = moment(d.date);
+
+      return {
+        id: id,
+        imageName: imageName,
+        imageURL: imageURL,
+        center: center,
+        date: date
+      };
+    });
+  },
+
   createImageURL: function(imageName) {
     const datePart = imageName.split('_')[2];
-    const datePath = `${datePart.slice(0, 4)}/${datePart.slice(4, 6)}/${datePart.slice(6, 8)}`;
-    const url = `${this.archiveEndpoint}/${datePath}/jpg/${imageName}.jpg?api_key=${
-      this.apiKey
-    }`;
+    const datePath =
+      `${datePart.slice(0, 4)}/` +
+      `${datePart.slice(4, 6)}/` +
+      `${datePart.slice(6, 8)}`;
+    const url = `${
+      this.archiveEndpoint
+    }/${datePath}/jpg/${imageName}.jpg?api_key=${this.apiKey}`;
     return encodeURI(url);
   }
 };
