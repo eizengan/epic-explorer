@@ -1,7 +1,7 @@
 const EPICAPI = {
   apiEndpoint: 'https://api.nasa.gov/EPIC/api/enhanced',
   archiveEndpoint: 'https://api.nasa.gov/EPIC/archive/enhanced',
-  apiKey: 'DEMO_KEY',
+  apiKey: process.env.REACT_APP_API_KEY || 'DEMO_KEY',
 
   fetchImageDateStrings: function() {
     const url = `${this.apiEndpoint}/all?api_key=${this.apiKey}`;
