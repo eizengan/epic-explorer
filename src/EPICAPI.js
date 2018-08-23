@@ -11,7 +11,7 @@ const EPICAPI = {
       .fetch(url)
       .then(res => res.json())
       .catch(err => {
-        console.log(err);
+        if (!process.env.REACT_APP_TESTING) console.log(err);
         return [];
       });
   },
@@ -21,7 +21,7 @@ const EPICAPI = {
       .fetch(url)
       .then(res => res.json())
       .catch(err => {
-        console.log(err);
+        if (!process.env.REACT_APP_TESTING) console.log(err);
         return [];
       })
       .then(this.mapAPIImageData);
