@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import EPICAPI from './EPICAPI';
 import moment from 'moment';
 import Calendar from 'react-calendar';
-import './DatePickerStyle.css';
 import ExpandableImage from './ExpandableImage';
 import './App.css';
 
@@ -43,6 +42,7 @@ class App extends Component {
   }
 
   render() {
+    const imageData = this.state.imageData;
     const images = imageData.map(d => (
       <div key={d.id} className="image">
         <ExpandableImage imageData={d} />
@@ -58,6 +58,19 @@ class App extends Component {
 
     return (
       <div className="app">
+        <div class="about-pane">
+          <h1 class="header">EPIC Explorer</h1>
+          <p className="subheader">
+            Learn more about EPIC&nbsp;
+            <a
+              href="https://epic.gsfc.nasa.gov/about/epic"
+              rel="external"
+              target="_blank"
+            >
+              here
+            </a>
+          </p>
+        </div>
         <div className="calendar-container">
           <Calendar
             minDetail="decade"

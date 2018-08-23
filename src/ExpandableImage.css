@@ -4,6 +4,10 @@
   width: 8em;
   height: 8em;
   background-color: #000;
+  border: 1px solid #555;
+}
+.expandable-image:hover {
+  border-color: #0c65bf;
 }
 .expandable-image.expanded {
   position: fixed;
@@ -15,6 +19,7 @@
   height: initial;
   max-width: none;
   max-height: none;
+  border: none;
   background-color: #000;
 }
 .expandable-image img {
@@ -32,7 +37,7 @@
 .expandable-image .close-button .close-button-icon {
   width: 2em;
   height: 2em;
-  background-color: rgba(255,255,255, 0.5);
+  background-color: rgba(255,255,255, 0.7);
   clip-path: polygon(
     0 20%,
     20% 0,
@@ -55,5 +60,5 @@
     bottom: 0.5em;
     right: 0.5em;
     text-align: right;
-    color: rgba(255,255,255, 0.5);
+    color: rgba(255,255,255, 0.7);
 }
