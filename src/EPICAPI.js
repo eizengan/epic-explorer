@@ -10,7 +10,7 @@ const EPICAPI = {
       .fetch(url)
       .then(res => res.json())
       .then(res => {
-        if (res.error) throw Error(`${error.code}: ${error.message}`);
+        if (res.error) throw Error(`${res.error.code}: ${res.error.message}`);
         return res;
       })
       .catch(err => {
