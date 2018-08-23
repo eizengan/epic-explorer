@@ -13,7 +13,6 @@ it('renders without crashing', () => {
   shallow(<App />);
 });
 it('updates date boundaries when mounted', () => {
-  expect.assertions(2);
   const minDateString = '2018-01-01';
   const maxDateString = '2018-12-31';
   global.fetch = createFakeFetch([

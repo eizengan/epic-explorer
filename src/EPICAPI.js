@@ -5,26 +5,26 @@ const EPICAPI = {
   archiveEndpoint: 'https://api.nasa.gov/EPIC/archive/enhanced',
   apiKey: process.env.REACT_APP_API_KEY || 'DEMO_KEY',
 
-  fetchImageDateStrings: function() {
-    const url = `${this.apiEndpoint}/all?api_key=${this.apiKey}`;
+  apiFetch: function(url, errorDefault) {
     return global
       .fetch(url)
       .then(res => res.json())
+      .then(res => {
+        if (res.error) throw Error(`${error.code}: ${error.message}`);
+        return res;
+      })
       .catch(err => {
         if (!process.env.REACT_APP_TESTING) console.log(err);
-        return [];
+        return errorDefault;
       });
+  },
+  fetchImageDateStrings: function() {
+    const url = `${this.apiEndpoint}/all?api_key=${this.apiKey}`;
+    return this.apiFetch(url, []);
   },
   fetchImageDataByDateString: function(dateString) {
     const url = `${this.apiEndpoint}/date/${dateString}?api_key=${this.apiKey}`;
-    return global
-      .fetch(url)
-      .then(res => res.json())
-      .catch(err => {
-        if (!process.env.REACT_APP_TESTING) console.log(err);
-        return [];
-      })
-      .then(this.mapAPIImageData);
+    return this.apiFetch(url, []).then(this.mapAPIImageData);
   },
   mapAPIImageData(imageData) {
     return imageData.map(d => {

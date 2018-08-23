@@ -13,7 +13,6 @@ it('has an endpoint for image archive', () => {
 });
 
 it('handles date fetch failures gracefully', () => {
-  expect.assertions(3);
   global.fetch = jest
     .fn()
     .mockImplementation(() => Promise.reject('intentionally broken fetch'));
@@ -24,7 +23,6 @@ it('handles date fetch failures gracefully', () => {
   });
 });
 it('handles image data fetch failures gracefully', () => {
-  expect.assertions(3);
   global.fetch = jest
     .fn()
     .mockImplementation(() => Promise.reject('intentionally broken fetch'));
