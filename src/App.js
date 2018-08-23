@@ -12,13 +12,13 @@ class App extends Component {
       selectedMoment: undefined,
       minMoment: undefined,
       maxMoment: undefined,
-      imageData: []
+      imageData: undefined
     };
     this.onDateChange = this.onDateChange.bind(this);
   }
 
   componentDidMount() {
-    EPICAPI.fetchImageDateStrings().then(dates => {
+    return EPICAPI.fetchImageDateStrings().then(dates => {
       if (!dates || !dates.length) return;
 
       const sortedDates = dates.map(d => d.date).sort();
@@ -29,21 +29,20 @@ class App extends Component {
         minMoment: minMoment,
         maxMoment: maxMoment
       });
-      this.onDateChange(maxMoment);
     });
   }
 
   onDateChange(date) {
     const selectedMoment = moment(date);
     this.setState({ selectedMoment: selectedMoment });
-    EPICAPI.fetchImageDataByDateString(
+    return EPICAPI.fetchImageDataByDateString(
       selectedMoment.format('YYYY-MM-DD')
     ).then(imageData => this.setState({ imageData: imageData }));
   }
 
   render() {
     const imageData = this.state.imageData;
-    const images = imageData.map(d => (
+    const images = imageData && imageData.map(d => (
       <div key={d.id} className="image">
         <ExpandableImage imageData={d} />
       </div>
@@ -58,13 +57,13 @@ class App extends Component {
 
     return (
       <div className="app">
-        <div class="about-pane">
-          <h1 class="header">EPIC Explorer</h1>
+        <div className="about-pane">
+          <h1 className="header">EPIC Explorer</h1>
           <p className="subheader">
             Learn more about EPIC&nbsp;
             <a
               href="https://epic.gsfc.nasa.gov/about/epic"
-              rel="external"
+              rel="noopener noreferrer external"
               target="_blank"
             >
               here
@@ -80,7 +79,11 @@ class App extends Component {
             onChange={this.onDateChange}
           />
         </div>
-        <div className="images-container">{images}</div>
+        <div className="images-container">
+          {images}
+          {!images && <div className="no-date">Select a Date</div>}
+          {images && !images.length && <div className="no-images">No images to show!</div>}
+        </div>
       </div>
     );
   }
