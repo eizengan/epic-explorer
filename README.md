@@ -4,7 +4,7 @@ Installation:
  * Ensure the most recent version of Node is installed
  * Clone repo from https://github.com/eizengan/epic-explorer.git
  * Navigate to project root - **all other instructions expect you to be here**
- * Run '_npm install_' to install dependencies - this can take a while
+ * Run `npm install` to install dependencies - this can take a while
 
 Setting API key (optional-ish):
  * This project will run with a **heavily rate-limited** demo key if no API key is provided
@@ -12,5 +12,5 @@ Setting API key (optional-ish):
  * To add your API key run `echo "REACT_APP_API_KEY=[YOUR KEY]" > .env.local` (or equivalent)
 
 Testing and running:
- * To run all included tests run '_npm test_'
- * To start a dev server and begin debugging run '_npm start_'
+ * To run all included tests run `npm test`
+ * To start a dev server and begin debugging run `npm start`
