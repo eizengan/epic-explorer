@@ -9,7 +9,7 @@ Installation:
 Setting API key (optional-ish):
  * This project will run with a **heavily rate-limited** demo key if no API key is provided
  * Applications for API keys can be made [here](https://api.nasa.gov/index.html#apply-for-an-api-key), and are processed almost immediately
- * To add your API key run '_echo "REACT\_APP\_API\_KEY=[YOUR KEY]" > .env.local_' (or equivalent)
+ * To add your API key run `echo "REACT_APP_API_KEY=[YOUR KEY]" > .env.local` (or equivalent)
 
 Testing and running:
  * To run all included tests run '_npm test_'
